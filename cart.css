@@ -63,7 +63,11 @@
     font-weight: 600;
     color: #272D9A;
 }
-
+.sum_title{
+    color: #272D9A;
+    font-size: 20px;
+    text-align: right;
+}
 .products_list {
     display: flex;
     flex-wrap: wrap;
