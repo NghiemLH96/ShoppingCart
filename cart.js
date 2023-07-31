@@ -17,7 +17,14 @@ let arrUser = JSON.parse(localStorage.getItem("userList")) ?? [];
                         <img class="product_img" src=${cartProducts[j].image} alt="">
                         <p class="product_name">${cartProducts[j].name}</p>
                         <p class="product_price">${cartProducts[j].price} $/each</p>
-                        <p class="product_price">quantity: ${cartProducts[j].quantity}</p>
+                        <p class="product_price">quantity:
+                        <span onclick="removeProduct(${cartProducts[j].id})" class="material-symbols-outlined">
+remove
+</span>
+ ${cartProducts[j].quantity}
+                        <span onclick="addProduct(${cartProducts[j].id})" class="material-symbols-outlined">
+add
+</span></p>
                         <p class="product_price">total price: ${cartProducts[j].quantity * cartProducts[j].price} $</p>
                         <div class="product_addtocart" onclick="removeFromCart(${cartProducts[j].id})">
                             <span>Remove from cart</span>
@@ -87,3 +94,43 @@ let arrUser = JSON.parse(localStorage.getItem("userList")) ?? [];
         function toRegister() {
         window.location.href="./register.html"
         }
+
+        function addProduct(productId) {
+            for (let i = 0; i < arrUser.length; i++) {
+                if(arrUser[i].id==loginCheck){
+                    let cartProducts = arrUser[i].cart;
+                    for (let j = 0; j < cartProducts.length; j++) {
+                        if (productId==cartProducts[j].id) {
+                            cartProducts[j].quantity+=1;
+                            localStorage.setItem("userList", JSON.stringify(arrUser));
+                            renderCartProducts()
+                            return;
+                        } 
+                    }
+                }
+            }
+        }
+
+        function removeProduct(productId) {
+            for (let i = 0; i < arrUser.length; i++) {
+                if(arrUser[i].id==loginCheck){
+                    let cartProducts = arrUser[i].cart;
+                    for (let j = 0; j < cartProducts.length; j++) {
+                        if (productId==cartProducts[j].id) {
+                            if(cartProducts[j].quantity>1){
+                            cartProducts[j].quantity-=1;
+                            localStorage.setItem("userList", JSON.stringify(arrUser));
+                            renderCartProducts()
+                            return;
+                            }if (cartProducts[j].quantity=1) {
+                                cartProducts.splice(j,1);
+                                localStorage.setItem("userList", JSON.stringify(arrUser));
+                                renderCartProducts()
+                            return;
+                            }
+                        } 
+                    }
+                }
+            }
+        }
+        

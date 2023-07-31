@@ -52,6 +52,11 @@
 .contructor{
     text-align: center;
 }
+.empty_error{
+    text-align: right;
+    color: orange;
+    opacity: 0;
+}
 .login{
     display: flex;
     flex-direction: column;

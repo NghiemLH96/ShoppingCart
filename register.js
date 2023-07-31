@@ -8,9 +8,30 @@
     function register(e){
     e.preventDefault();
     let userName = document.getElementById("username").value;
+    if(userName==""){
+        document.getElementById("empty_username").style.opacity="1";
+    }else{
+        document.getElementById("empty_username").style.opacity="0"
+    }
     let passwords = document.getElementById("passwords").value;
+    if(passwords==""){
+        document.getElementById("empty_passwords").style.opacity="1";
+    }else{
+        document.getElementById("empty_passwords").style.opacity="0"
+    }
     let confirmPasswords = document.getElementById("confirm_passwords").value
+    if(confirmPasswords==""){
+        document.getElementById("empty_confirmpasswords").style.opacity="1";
+    }else{
+        document.getElementById("empty_confirmpasswords").style.opacity="0"
+    }
     let email = document.getElementById("emailaddress").value;
+    if(email==""){
+        document.getElementById("empty_emailaddress").style.opacity="1";
+        return;
+    }else{
+        document.getElementById("empty_emailaddress").style.opacity="0"
+    }
     let userObj = {
         name:userName,
         password:passwords,

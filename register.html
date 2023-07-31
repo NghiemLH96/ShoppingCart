@@ -18,7 +18,7 @@
                 </span>
                 <label>Home</label>
             </div>
-            <div onclick="loginhtml()" class="header_tools_div">
+            <div onclick="toLogin()" class="header_tools_div">
                 <span class="material-symbols-outlined  header_tools_button">
                     login
                 </span>
@@ -37,22 +37,25 @@
         <form class="register_form" action="">
             <div>
                 <label for="username" class="form_content_title">Username</label>
-                <input id="username" class="form_content_input" placeholder="Enter Username" type="text">
+                <input id="username" class="form_content_input" placeholder="Enter Username" type="text" >
+                <p id="empty_username" class="empty_error">username not input yet*</p>
             </div><br>
             <div>
                 <label for="passwords" class="form_content_title">Passwords</label>
-                <input id="passwords" class="form_content_input" placeholder="Enter Passwords" type="password">
+                <input id="passwords" class="form_content_input" placeholder="Enter Passwords" type="password" >
+                <p id="empty_passwords" class="empty_error">passwords not input yet*</p>
             </div>
             <div id="alert_passwordIncorrect">
-
             </div><br>
             <div>
                 <label for="confirm_passwords" class="form_content_title">Confirm Passwords</label>
-                <input id="confirm_passwords" class="form_content_input" placeholder="Enter Confirm Passwords" type="password">
+                <input id="confirm_passwords" class="form_content_input" placeholder="Enter Confirm Passwords" type="password" >
+                <p id="empty_confirmpasswords" class="empty_error">confirm passwords not input yet*</p>
             </div><br>
             <div>
                 <label for="emailaddress" class="form_content_title">Email Address</label>
-                <input id="emailaddress" class="form_content_input" placeholder="Enter Email Address" type="text">
+                <input id="emailaddress" class="form_content_input" placeholder="Enter Email Address" type="text" >
+                <p id="empty_emailaddress" class="empty_error">email address not input yet*</p>
             </div><br>
             <div>
                 <button onclick="clear()" class="form_content_button">Clear</button>

@@ -38,11 +38,13 @@
         <form class="login_form" action="">
             <div>
                 <label for="username" class="form_content_title">Username</label>
-                <input id="username" class="form_content_input" placeholder="Enter Username" type="text">
+                <input id="username" class="form_content_input" placeholder="Enter Username" type="text" required>
+                <p id="empty_username" class="empty_error">username not input yet*</p>
             </div><br>
             <div>
                 <label for="passwords" class="form_content_title">Passwords</label>
-                <input id="passwords" class="form_content_input" placeholder="Enter Passwords" type="password">
+                <input id="passwords" class="form_content_input" placeholder="Enter Passwords" type="password" required>
+                <p id="empty_passwords" class="empty_error">passwords not input yet*</p>
             </div><br>
             <div>
                 <button onclick="clear()" class="form_content_button">Clear</button>

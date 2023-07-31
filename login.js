@@ -3,7 +3,18 @@
     function login(e) {
         e.preventDefault();
         let userName = document.getElementById("username").value;
+        if(userName==""){
+            document.getElementById("empty_username").style.opacity="1";
+        }else{
+            document.getElementById("empty_username").style.opacity="0"
+        }
         let passwords = document.getElementById("passwords").value;
+        if(passwords==""){
+            document.getElementById("empty_passwords").style.opacity="1";
+            return;
+        }else{
+            document.getElementById("empty_passwords").style.opacity="0"
+        }
         for (let i = 0; i < arrUser.length; i++) {
             if (userName==arrUser[i].name && passwords==arrUser[i].password) {
                 localStorage.setItem("checkLogin",arrUser[i].id)
