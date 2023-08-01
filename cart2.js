@@ -1,32 +1,38 @@
 let arrUser = JSON.parse(localStorage.getItem("userList")) ?? [];
 let loginCheck = localStorage.getItem("checkLogin");
-function renderCartProducts(cartProductsList) {
-    for (let i = 0; i < cartProductsList.length; i++) {
-        if (cartProductsList[i].id == loginCheck) {
-            let cartProducts = cartProductsList[i].cart;
-            let innerCartProducts = "";
-            let innerTotalProducts = 0;
-            let innerTotalCost = 0;
+function checkLogin(users) {
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].id == loginCheck) {
+            let cartProducts = users[i].cart;
+            renderCartProducts(cartProducts)
+        }
+    }
+}
 
-            for (let j = 0; j < cartProducts.length; j++) {
-                innerTotalProducts += cartProducts[j].quantity;
-                innerTotalCost += (cartProducts[j].quantity * cartProducts[j].price);
-                innerCartProducts +=
-                    `
+function renderCartProducts(cartProductsList) {
+    let innerCartProducts = "";
+    let innerTotalProducts = 0;
+    let innerTotalCost = 0;
+
+    for (let j = 0; j < cartProductsList.length; j++) {
+        innerTotalProducts += cartProductsList[j].quantity;
+        innerTotalCost += (cartProductsList[j].quantity * cartProductsList[j].price);
+        innerCartProducts +=
+            `
                     <div class="product_detail">
-                        <img class="product_img" src=${cartProducts[j].image} alt="">
-                        <p class="product_name">${cartProducts[j].name}</p>
-                        <p class="product_price">${cartProducts[j].price} $/each</p>
+                        <img class="product_img" src=${cartProductsList[j].image} alt="">
+                        <p class="product_name">${cartProductsList[j].name}</p>
+                        <p class="product_price">${cartProductsList[j].price} $/each</p>
                         <p class="product_price">quantity:
-                        <span onclick="removeProduct(${cartProducts[j].id})" class="material-symbols-outlined">
+                        <span onclick="removeProduct(${cartProductsList[j].id})" class="material-symbols-outlined adjust_quantity">
 remove
 </span>
- ${cartProducts[j].quantity}
-                        <span onclick="addProduct(${cartProducts[j].id})" class="material-symbols-outlined">
+ ${cartProductsList[j].quantity}
+                        <span onclick="addProduct(${cartProductsList[j].id})" class="material-symbols-outlined adjust_quantity">
 add
 </span></p>
-                        <p class="product_price">total price: ${cartProducts[j].quantity * cartProducts[j].price} $</p>
-                        <div class="product_addtocart" onclick="removeFromCart(${cartProducts[j].id})">
+                        <p class="product_price">total price: ${cartProductsList[j].quantity * cartProductsList[j].price} $</p>
+                        <div class="product_addtocart" onclick="removeFromCart(${cartProductsList[j].id})">
                             <span>Remove from cart</span>
                             <span class="material-symbols-outlined product_addtocart_icon">
                             delete
@@ -34,15 +40,12 @@ add
                         </div>
                     </div>
                 `
-                document.getElementById("total_cost").textContent = `Total Cost: ` + innerTotalCost + ` $`
-                document.getElementById("total_products").textContent = `Total products: ` + innerTotalProducts + ` pcs`
-                document.getElementById("products_list").innerHTML = innerCartProducts;
-            }
-        }
+        document.getElementById("total_cost").textContent = `Total Cost: ` + innerTotalCost + ` $`
+        document.getElementById("total_products").textContent = `Total products: ` + innerTotalProducts + ` pcs`
+        document.getElementById("products_list").innerHTML = innerCartProducts;
     }
-
 }
-renderCartProducts(arrUser)
+checkLogin(arrUser)
 
 function removeFromCart(id) {
     for (let i = 0; i < arrUser.length; i++) {
@@ -57,8 +60,9 @@ function removeFromCart(id) {
         }
     }
     localStorage.setItem("userList", JSON.stringify(arrUser));
-    renderCartProducts(arrUser)
+    checkLogin(arrUser)
 }
+
 function toLogin() {
     window.location.href = "./login.html";
 }
@@ -69,7 +73,6 @@ function hiddenLogoutButton() {
     if (loginCheck == null) {
         logoutButton.style.display = "none";
     }
-
 }
 hiddenLogoutButton()
 
@@ -81,6 +84,7 @@ function hiddenLoginButton() {
     }
 }
 hiddenLoginButton()
+
 function logout() {
     localStorage.removeItem("checkLogin")
     document.getElementById("logoutButton").style.display = "none";
@@ -95,6 +99,16 @@ function toRegister() {
     window.location.href = "./register.html"
 }
 
+function toCart() {
+    let loginCheck = localStorage.getItem("checkLogin");
+    if (loginCheck == null) {
+        alert("Should login before access cart!")
+        window.location.href = "./login.html"
+    } else {
+        window.location.href = "./cart.html"
+    }
+}
+
 function addProduct(productId) {
     for (let i = 0; i < arrUser.length; i++) {
         if (arrUser[i].id == loginCheck) {
@@ -103,7 +117,7 @@ function addProduct(productId) {
                 if (productId == cartProducts[j].id) {
                     cartProducts[j].quantity += 1;
                     localStorage.setItem("userList", JSON.stringify(arrUser));
-                    renderCartProducts(arrUser)
+                    checkLogin(arrUser)
                     return;
                 }
             }
@@ -120,12 +134,12 @@ function removeProduct(productId) {
                     if (cartProducts[j].quantity > 1) {
                         cartProducts[j].quantity -= 1;
                         localStorage.setItem("userList", JSON.stringify(arrUser));
-                        renderCartProducts(arrUser)
+                        checkLogin(arrUser)
                         return;
                     } if (cartProducts[j].quantity = 1) {
                         cartProducts.splice(j, 1);
                         localStorage.setItem("userList", JSON.stringify(arrUser));
-                        renderCartProducts(arrUser)
+                        checkLogin(arrUser)
                         return;
                     }
                 }
@@ -133,14 +147,24 @@ function removeProduct(productId) {
         }
     }
 }
-let arrProducts = JSON.parse(localStorage.getItem("products")) || [];
 function search() {
+    let userCart=[];
+    for (let i = 0; i < arrUser.length; i++) {
+        if(arrUser[i].id==loginCheck){
+            userCart=arrUser[i].cart;
+        }
+    }
     let typeSearch = document.getElementById("header_search_input").value;
     let searchResult = [];
-    for (let i = 0; i < arrProducts.length; i++) {
-        if (arrProducts[i].name.indexOf(typeSearch) != -1) {
-            searchResult.push(arrProducts[i])
+    for (let j = 0; j < userCart.length; j++) {
+        if (userCart[j].name.indexOf(typeSearch) != -1) {
+            searchResult.push(userCart[j])
         }
+    }
+    console.log(searchResult);
+    renderCartProducts(searchResult)
+    if (searchResult==[]) {
+        checkLogin(arrUser);
     }
 }
 

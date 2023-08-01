@@ -23,15 +23,18 @@
     margin: 30px;
     column-gap: 10px;
 }
-.header_tools_div{
+
+.header_tools_div {
     display: flex;
     align-items: center;
     column-gap: 10px;
 }
-.header_tools_div:hover{
+
+.header_tools_div:hover {
     color: orange;
 }
-.header_search_input{
+
+.header_search_input {
     height: 35px;
     width: 300px;
     padding: 10px;
@@ -56,6 +59,7 @@
     margin: 0px 120px;
     row-gap: 30px;
 }
+
 .products_introduction {
     text-align: center;
     font-size: 40px;
@@ -70,6 +74,7 @@
     column-gap: 30px;
     row-gap: 30px;
 }
+
 .product_detail {
     display: inline-block;
     width: 400px;
@@ -95,15 +100,15 @@
 }
 
 .product_addtocart {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     background-color: #272D9A;
-     color: #FFFF;
-     width: 275px;
-     position: relative;
-     left: 61px;
-     
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #272D9A;
+    color: #FFFF;
+    width: 275px;
+    position: relative;
+    left: 61px;
+
 }
 
 .product_addtocart:hover {

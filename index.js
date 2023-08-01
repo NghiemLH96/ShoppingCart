@@ -1,9 +1,9 @@
-        let arrProducts = JSON.parse(localStorage.getItem("products")) ?? [];
-        function renderProducts(productsList) {
-            let innerProducts = "";
-            for (let i = 0; i < productsList.length; i++) {
-                innerProducts +=
-                    `
+let arrProducts = JSON.parse(localStorage.getItem("products")) ?? [];
+function renderProducts(productsList) {
+    let innerProducts = "";
+    for (let i = 0; i < productsList.length; i++) {
+        innerProducts +=
+            `
                     <div class="product_detail">
                         <img class="product_img" src=${productsList[i].image} alt="">
                         <p class="product_name">${productsList[i].name}</p>
@@ -16,97 +16,96 @@
                         </div>
                     </div>
                 `
-            }
-            document.getElementById("products_list").innerHTML = innerProducts;
-        }
-        renderProducts(arrProducts)
+    }
+    document.getElementById("products_list").innerHTML = innerProducts;
+}
+renderProducts(arrProducts)
 
-        //search
-        let arrProduct = JSON.parse(localStorage.getItem("products"))||[];
-        function search() {
-            let typeSearch = document.getElementById("header_search_input").value;
-            let searchResult = [];
-            for (let i = 0; i < arrProduct.length; i++) {
-                if (arrProduct[i].name.indexOf(typeSearch)!=-1){
-                    searchResult.push(arrProduct[i])
-                }
-            }
-            renderProducts(searchResult)
+//searchf
+function search() {
+    let typeSearch = document.getElementById("header_search_input").value;
+    let searchResult = [];
+    for (let i = 0; i < arrProducts.length; i++) {
+        if (arrProducts[i].name.indexOf(typeSearch) != -1) {
+            searchResult.push(arrProducts[i])
         }
-        function toLogin(){
-            window.location.href="./login.html";
-        }
+    }
+    renderProducts(searchResult)
+}
+function toLogin() {
+    window.location.href = "./login.html";
+}
 
-        function hiddenLogoutButton(){
-            let loginCheck = localStorage.getItem("checkLogin");
-            let logoutButton =document.getElementById("logoutButton")
-            if(loginCheck==null){
-                logoutButton.style.display="none";
-            }
+function hiddenLogoutButton() {
+    let loginCheck = localStorage.getItem("checkLogin");
+    let logoutButton = document.getElementById("logoutButton")
+    if (loginCheck == null) {
+        logoutButton.style.display = "none";
+    }
 
-        }
-        hiddenLogoutButton()
+}
+hiddenLogoutButton()
 
-        function hiddenLoginButton(){
-            let loginCheck = localStorage.getItem("checkLogin");
-            let loginButton = document.getElementById("loginButton");
-            if(loginCheck!=null){
-                loginButton.style.display="none";
-            }
-        }
-        hiddenLoginButton()
+function hiddenLoginButton() {
+    let loginCheck = localStorage.getItem("checkLogin");
+    let loginButton = document.getElementById("loginButton");
+    if (loginCheck != null) {
+        loginButton.style.display = "none";
+    }
+}
+hiddenLoginButton()
 
-        function logout(){
-            localStorage.removeItem("checkLogin")
-            document.getElementById("logoutButton").style.display="none";
-            document.getElementById("loginButton").style.display="";
-        }
+function logout() {
+    localStorage.removeItem("checkLogin")
+    document.getElementById("logoutButton").style.display = "none";
+    document.getElementById("loginButton").style.display = "";
+}
 
-        function toHome(){
-        window.location.href="./index.html"
-        }
+function toHome() {
+    window.location.href = "./index.html"
+}
 
-        function toRegister() {
-        window.location.href="./register.html"
-        }
+function toRegister() {
+    window.location.href = "./register.html"
+}
 
-        function toCart(){
-        let loginCheck = localStorage.getItem("checkLogin");
-        if (loginCheck==null) {
-            alert("Should login before access cart!")
-            window.location.href="./login.html"
-        }else{
-            window.location.href="./cart.html"
-        }
-        }
+function toCart() {
+    let loginCheck = localStorage.getItem("checkLogin");
+    if (loginCheck == null) {
+        alert("Should login before access cart!")
+        window.location.href = "./login.html"
+    } else {
+        window.location.href = "./cart.html"
+    }
+}
 
-        function addToCart(productId){
-            let arrUser=JSON.parse(localStorage.getItem("userList"))||[];
-            let arrProducts = JSON.parse(localStorage.getItem("products")) ?? [];
-            let loginCheck = localStorage.getItem("checkLogin");
-            if (loginCheck==null) {
-                alert("Should login before add product to cart!")
-                return;
-            }else{
-                for (let i = 0; i < arrUser.length; i++) {
-                    if(loginCheck==arrUser[i].id){
-                        for (let j = 0; j < arrProducts.length; j++) {
-                            if (productId==arrProducts[j].id) {
-                                let result = arrUser[i].cart.filter((item)=>{
-                                    console.log(arrUser[i]);
-                                    return item.id ==productId;
-                                })
-                                if(result.length==0){
-                                    arrUser[i].cart.push(arrProducts[j]);
-                                    localStorage.setItem("userList", JSON.stringify(arrUser));
-                                    console.log(arrUser[i]);
-                                    return;
-                                }
-                                result[0].quantity=++result[0].quantity;
-                                localStorage.setItem("userList", JSON.stringify(arrUser));
-                            } 
+function addToCart(productId) {
+    let arrUser = JSON.parse(localStorage.getItem("userList")) || [];
+    let arrProducts = JSON.parse(localStorage.getItem("products")) ?? [];
+    let loginCheck = localStorage.getItem("checkLogin");
+    if (loginCheck == null) {
+        alert("Should login before add product to cart!")
+        return;
+    } else {
+        for (let i = 0; i < arrUser.length; i++) {
+            if (loginCheck == arrUser[i].id) {
+                for (let j = 0; j < arrProducts.length; j++) {
+                    if (productId == arrProducts[j].id) {
+                        let result = arrUser[i].cart.filter((item) => {
+                            console.log(arrUser[i]);
+                            return item.id == productId;
+                        })
+                        if (result.length == 0) {
+                            arrUser[i].cart.push(arrProducts[j]);
+                            localStorage.setItem("userList", JSON.stringify(arrUser));
+                            console.log(arrUser[i]);
+                            return;
                         }
+                        result[0].quantity = ++result[0].quantity;
+                        localStorage.setItem("userList", JSON.stringify(arrUser));
                     }
                 }
             }
         }
+    }
+}
