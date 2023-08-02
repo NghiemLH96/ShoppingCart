@@ -66,7 +66,7 @@ function register(e) {
     console.log(arrUser);
     localStorage.setItem("userList", JSON.stringify(arrUser));
     clear();
-    toLogin()
+    /* toLogin() */
 }
 
 //clear
